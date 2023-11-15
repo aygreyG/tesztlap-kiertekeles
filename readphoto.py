@@ -40,6 +40,6 @@ def get_regions(img_path):
             ROI_num += 1
             text = pytesseract.image_to_string(cropped, lang='hun')
             if text != '':  
-              regions.append((img, text))
+                regions.append((text, cropped, (x, y, w, h)))
 
     return regions
