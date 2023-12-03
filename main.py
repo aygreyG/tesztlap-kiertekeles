@@ -47,12 +47,12 @@ def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COOR
     return marked_answers
 
 def main():
-    img_folder_path = r'tesztlap-kiertekeles\test_data'
-    solution_path = r'tesztlap-kiertekeles\Megol.txt'
+    img_folder_path = r'test_data/sheet_07.jpg'
+    solution_path = r'Megol.txt'
     sections = readphoto.get_regions(img_folder_path)
     marked_answers = GT(sections)
-    pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers)
-    pont_keret.keret(img_path=img_folder_path,ret=pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers))
+    val = pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers)
+    pont_keret.keret(img_path=img_folder_path, ret=val)
 
 if __name__ == "__main__":
     main()

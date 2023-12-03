@@ -37,8 +37,7 @@ def pontszam(text_path,anwsers_det):
     maxpont= len(solved)
     #elért pontszám
     pontszam=len(good)
-    ret=np.array(anw1,good,maxpont)
-    return ret
+    return [anw1,good,maxpont, pontszam]
 
 def keret(img_path,ret):
 #keretézés
@@ -50,35 +49,35 @@ def keret(img_path,ret):
     for st in ret[0]:
         target_text = st
         df = pytesseract.image_to_data(gray, "eng", "--psm 6", output_type=pytesseract.Output.DATAFRAME)
-    for line_num, words_per_line in df.groupby("line_num"):
-        words_per_line = words_per_line[words_per_line["conf"] >= 70]
-        if not len(words_per_line):
-         continue
+        for line_num, words_per_line in df.groupby("line_num"):
+            words_per_line = words_per_line[words_per_line["conf"] >= 70]
+            if not len(words_per_line):
+             continue
 
-        words = words_per_line["text"].values
-        #minden sorban lévő szót összefűz.
-        line = " ".join(words)
-        lowline=line.lower()
-        #ha a keresett szó szerepel a sorban bekeretezi, annak függvényében, hogy a jó válaszok között van-e vagy sem.
-        if target_text in lowline:
-            if(st in ret[1]):
-                word_boxes = []
-                for left, top, width, height in words_per_line[["left", "top", "width", "height"]].values:
-                    word_boxes.append((left, top))
-                    word_boxes.append((left + width, top + height))
+            words = words_per_line["text"].values
+            #minden sorban lévő szót összefűz.
+            line = " ".join(words)
+            lowline=line.lower()
+            #ha a keresett szó szerepel a sorban bekeretezi, annak függvényében, hogy a jó válaszok között van-e vagy sem.
+            if target_text in lowline:
+                if(st in ret[1]):
+                    word_boxes = []
+                    for left, top, width, height in words_per_line[["left", "top", "width", "height"]].values:
+                        word_boxes.append((left, top))
+                        word_boxes.append((left + width, top + height))
 
-                x, y, w, h = cv2.boundingRect(np.array(word_boxes))
-                cv2.rectangle(original_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            if(st not in ret[1]):
-                word_boxes = []
+                    x, y, w, h = cv2.boundingRect(np.array(word_boxes))
+                    cv2.rectangle(original_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                if(st not in ret[1]):
+                    word_boxes = []
 
-                for left, top, width, height in words_per_line[["left", "top", "width", "height"]].values:
-                    word_boxes.append((left, top))
-                    word_boxes.append((left + width, top + height))
+                    for left, top, width, height in words_per_line[["left", "top", "width", "height"]].values:
+                        word_boxes.append((left, top))
+                        word_boxes.append((left + width, top + height))
 
-                x, y, w, h = cv2.boundingRect(np.array(word_boxes))
-                cv2.rectangle(original_image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                    x, y, w, h = cv2.boundingRect(np.array(word_boxes))
+                    cv2.rectangle(original_image, (x, y), (x + w, y + h), (0, 0, 255), 2)
     #A képre kiírja a pontszámot.
-    cv2.putText(original_image, "Pontszam: %d/%d"%(pontszam,ret[2]), (300, 20), 1, 1, (0, 0, 255), 1)
+    cv2.putText(original_image, "Pontszam: %d/%d"%(ret[3],ret[2]), (300, 20), 1, 1, (0, 0, 255), 1)
     cv2.imshow('image', original_image)
     key=cv2.waitKey(0)
