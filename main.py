@@ -6,7 +6,7 @@ import cv2
 # language package DOWNLOAD
 # 10
 
-def david():
+def test_1_2():
     # TODO test
     test_images: list = []
     all_files = os.listdir('tesztlap-kiertekeles\\test_data\\drawing_detection')
@@ -43,16 +43,13 @@ def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COOR
         if index%5 == 4 and not marked_answer:
             marked_answer = 0
             marked_answers.append(marked_answer)
+    print(marked_answers)
     return marked_answers
 
-def MóricV(marked_answers):
-    # TODO test
-    print(marked_answers)
-
 def main():
-    sections = david()              # 1., 2. lépés
-    marked_answers = GT(sections)   # 3., 4. lépés
-    MóricV(marked_answers)          # 5., 6. lépés
+    sections = readphoto.get_regions(r'tesztlap-kiertekeles\test_data')             # 1., 2. lépés
+    marked_answers = GT(sections)                                                   # 3., 4. lépés
+    import pont_keret
     
 
 if __name__ == "__main__":

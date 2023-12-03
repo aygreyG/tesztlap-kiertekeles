@@ -13,3 +13,9 @@ A tesztlap tartalmazza a következőket:
 4. A helyes válasz(oka)t aláhúzással, ikszeléssel, bekarikázással stb. jelölik és ennek a detektálását kellene megvalósítani, ekkor kapunk egy listát a megjelölt válaszokról
 5. A megjelölt válaszokat a megoldókulcs alapján összevetjük és megkapjuk a tesztlap pontszámát.
 6. Az eredményt vizualizáljuk, a pontszám mellett visszaadjuk a tesztlapot is úgy, hogy a script rárajzolja az azonosított részeket, bekeretezi különböző színű téglalapokkal.
+
+# Tesseract letöltési útmutató
+https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.3.0.20221214.exe
+
+# Állomány futattása
+``` pip install -r requirements.txt ```
