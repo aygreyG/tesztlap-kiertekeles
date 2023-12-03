@@ -37,6 +37,7 @@ def pontszam(text_path,anwsers_det):
     maxpont= len(solved)
     #elért pontszám
     pontszam=len(good)
+    return anw1,good,maxpont
 
 def keret(img_path,anw1,good,maxpont):
 #keretézés
