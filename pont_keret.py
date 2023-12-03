@@ -37,16 +37,17 @@ def pontszam(text_path,anwsers_det):
     maxpont= len(solved)
     #elért pontszám
     pontszam=len(good)
-    return anw1,good,maxpont
+    ret=np.array(anw1,good,maxpont)
+    return ret
 
-def keret(img_path,anw1,good,maxpont):
+def keret(img_path,ret):
 #keretézés
 #itt kell módosítani a kép elérési útját.
     original_image = cv2.imread(img_path)
     gray = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
 
     #végig fut az általunk megadott válaszokon
-    for st in anw1:
+    for st in ret[0]:
         target_text = st
         df = pytesseract.image_to_data(gray, "eng", "--psm 6", output_type=pytesseract.Output.DATAFRAME)
     for line_num, words_per_line in df.groupby("line_num"):
@@ -60,7 +61,7 @@ def keret(img_path,anw1,good,maxpont):
         lowline=line.lower()
         #ha a keresett szó szerepel a sorban bekeretezi, annak függvényében, hogy a jó válaszok között van-e vagy sem.
         if target_text in lowline:
-            if(st in good):
+            if(st in ret[1]):
                 word_boxes = []
                 for left, top, width, height in words_per_line[["left", "top", "width", "height"]].values:
                     word_boxes.append((left, top))
@@ -68,7 +69,7 @@ def keret(img_path,anw1,good,maxpont):
 
                 x, y, w, h = cv2.boundingRect(np.array(word_boxes))
                 cv2.rectangle(original_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            if(st not in good):
+            if(st not in ret[1]):
                 word_boxes = []
 
                 for left, top, width, height in words_per_line[["left", "top", "width", "height"]].values:
@@ -78,6 +79,6 @@ def keret(img_path,anw1,good,maxpont):
                 x, y, w, h = cv2.boundingRect(np.array(word_boxes))
                 cv2.rectangle(original_image, (x, y), (x + w, y + h), (0, 0, 255), 2)
     #A képre kiírja a pontszámot.
-    cv2.putText(original_image, "Pontszam: %d/%d"%(pontszam,maxpont), (300, 20), 1, 1, (0, 0, 255), 1)
+    cv2.putText(original_image, "Pontszam: %d/%d"%(pontszam,ret[2]), (300, 20), 1, 1, (0, 0, 255), 1)
     cv2.imshow('image', original_image)
     key=cv2.waitKey(0)
