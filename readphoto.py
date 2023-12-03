@@ -39,8 +39,9 @@ def get_regions(img_path):
             ROI_num += 1
             text = pytesseract.image_to_string(cropped, lang='eng')
             text = text.replace('\n', '')
+            cropped_color = img[y:y + h, x:x + w]
             if text != '':
-                regions.append((text, cropped, (x, y, w, h)))
+                regions.append((text, cropped_color, (x, y, w, h)))
 
     regions.reverse()
     return regions
