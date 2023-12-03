@@ -35,6 +35,8 @@ def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COOR
         marked_answer = None
         if sentence_type == sentence_classification.StringClass.Answer:
             answers.append(section)
+        else:
+            continue
         detector = detect_drawing.DetectDrawingSolution()   # 4. lépés
         detected_type: detect_drawing.DrawingClass = detector.algorithm(section[1]) #
         if detected_type == detect_drawing.DrawingClass.MARKED:
