@@ -1,6 +1,6 @@
 """ 3. lépés """
 
-from transformers import pipeline
+# from transformers import pipeline
 from enum import Enum
 import pandas as pd
 import re
@@ -11,7 +11,8 @@ class StringClass(Enum):
 
 class ClassificationSolution:
     def __init__(self, model = "shahrukhx01/question-vs-statement-classifier") -> None:
-        self.classifier = pipeline("text-classification", model=model, tokenizer=model)
+        self.classifier = None #pipeline("text-classification", model=model, tokenizer=model)
+        pass
     
     def simplistic_classifier(self, sentence: str):
         # for simple solution. Just check if it has number and a dot. at the start
@@ -26,7 +27,7 @@ class ClassificationSolution:
         result = self.classifier(sentence)
         return StringClass(result[0]['label'])
     
-    def algorithm(self, path = "S08_question_answer_pairs.txt"):
+    def algorithm(self, path = "tesztlap-kiertekeles/test_data/sentence_classification/S08_question_answer_pairs.txt"):
         self.test_data(path)
         pass
         
@@ -42,7 +43,7 @@ class ClassificationSolution:
             if type(questions_list[x]) != str or type(answer_list[x]) != str:
                 continue
             total += 1
-            if self.classify(questions_list[x]) == StringClass.Question and self.classify(answer_list[x]) == StringClass.Answer:
+            if self.simplistic_classifier(questions_list[x]) == StringClass.Question and self.simplistic_classifier(answer_list[x]) == StringClass.Answer:
                 score += 1
         print("score:", score/total)
         return score/total
