@@ -37,7 +37,7 @@ def get_regions(img_path):
             cropped = img_copy[y:y + h, x:x + w]
             cv2.imwrite('rois/ROI_{}.png'.format(ROI_num), cropped)
             ROI_num += 1
-            text = pytesseract.image_to_string(cropped, lang='eng')
+            text = pytesseract.image_to_string(cropped, lang='eng', config='--psm 6')
             text = text.replace('\n', '')
             cropped_color = img[y:y + h, x:x + w]
             if text != '':
