@@ -35,17 +35,15 @@ def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COOR
         marked_answer = None
         if sentence_type == sentence_classification.StringClass.Answer:
             answers.append(section)
-        else:
-            continue
         detector = detect_drawing.DetectDrawingSolution()   # 4. lépés
         detected_type: detect_drawing.DrawingClass = detector.algorithm(section[1]) #
         if detected_type == detect_drawing.DrawingClass.MARKED:
-            marked_answer = index%5 - 1
+            marked_answer = len(answers)
             marked_answers.append(marked_answer)
         if index%5 == 4 and not marked_answer:
             marked_answer = 0
             marked_answers.append(marked_answer)
-    print(marked_answers) 
+    print(marked_answers)
     return marked_answers
 
 def main():
@@ -53,8 +51,8 @@ def main():
     solution_path = r'tesztlap-kiertekeles\Megol.txt'
     sections = readphoto.get_regions(img_folder_path)
     marked_answers = GT(sections)
-    # pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers)
-    # pont_keret.keret(img_path=img_folder_path)
+    pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers)
+    pont_keret.keret(img_path=img_folder_path,ret=pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers))
 
 if __name__ == "__main__":
     main()
