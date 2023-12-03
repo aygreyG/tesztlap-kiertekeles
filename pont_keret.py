@@ -12,7 +12,8 @@ solved=contents
 #A kitöltő által adott válaszok stringeket tárol.
 #anwsers-be kell bekötni a detektált válaszokat
 anwsers= ["0","2"]
-sol=np.array(solved)
+sol1=[so.lower() for so in solved]
+sol=np.array(sol1)
 anw=np.array(anwsers)
 anw1=[]
 good=[]
