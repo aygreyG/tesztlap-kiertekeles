@@ -4,6 +4,7 @@ import detect_drawing
 import os
 import cv2
 import pont_keret
+import sys
 
 
 def test_1_2():
@@ -28,6 +29,7 @@ def test_1_2():
 
 def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COORDINATES) -> OUTPOUT (NUMBERS OF )
     marked_answers: list[int] = [] # the marked answers for each section.
+    i = 0
     for index, section in enumerate(sections):
         classificator = sentence_classification.ClassificationSolution() # 3. lépés
         sentence_type = classificator.simplistic_classifier(section[0])
@@ -35,24 +37,34 @@ def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COOR
         marked_answer = None
         if sentence_type == sentence_classification.StringClass.Answer:
             answers.append(section)
+        else:
+            i = 0
+            continue
         detector = detect_drawing.DetectDrawingSolution()   # 4. lépés
         detected_type: detect_drawing.DrawingClass = detector.algorithm(section[1]) #
         if detected_type == detect_drawing.DrawingClass.MARKED:
-            marked_answer = len(answers)
+            marked_answer = index%4
             marked_answers.append(marked_answer)
         if index%5 == 4 and not marked_answer:
             marked_answer = 0
             marked_answers.append(marked_answer)
-    print(marked_answers)
+        i += 1
+    print(marked_answers, len(marked_answers))
     return marked_answers
 
 def main():
-    img_folder_path = r'test_data/sheet_07.jpg'
-    solution_path = r'Megol.txt'
-    sections = readphoto.get_regions(img_folder_path)
+    if len(sys.argv) != 5:
+        image_path = r'D:\project\egyetem\kepfel\tesztlap-kiertekeles\test_data\sheet_07.jpg'
+        solution_path = r'D:\project\egyetem\kepfel\tesztlap-kiertekeles\Megol.txt'
+        tesseract_path = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    else:
+        image_path = sys.argv[2]
+        solution_path = sys.argv[3]
+        tesseract_path = sys.argv[4]
+    sections = readphoto.get_regions(image_path, tesseract_path)
     marked_answers = GT(sections)
     val = pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers)
-    pont_keret.keret(img_path=img_folder_path, ret=val)
+    pont_keret.keret(img_path=image_path, ret=val)
 
 if __name__ == "__main__":
     main()
