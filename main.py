@@ -38,7 +38,7 @@ def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COOR
         detector = detect_drawing.DetectDrawingSolution()   # 4. lépés
         detected_type: detect_drawing.DrawingClass = detector.algorithm(section[1]) #
         if detected_type == detect_drawing.DrawingClass.MARKED:
-            marked_answer = index%5
+            marked_answer = index%5 - 1
             marked_answers.append(marked_answer)
         if index%5 == 4 and not marked_answer:
             marked_answer = 0
