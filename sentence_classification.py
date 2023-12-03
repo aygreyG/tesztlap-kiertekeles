@@ -3,14 +3,24 @@
 from transformers import pipeline
 from enum import Enum
 import pandas as pd
+import re
 
 class StringClass(Enum):
     Answer = "LABEL_0"
     Question = "LABEL_1"
 
 class ClassificationSolution:
-    def __init__(self, sentences: list[str], model = "shahrukhx01/question-vs-statement-classifier") -> None:
+    def __init__(self, model = "shahrukhx01/question-vs-statement-classifier") -> None:
         self.classifier = pipeline("text-classification", model=model, tokenizer=model)
+    
+    def simplistic_classifier(self, sentence: str):
+        # for simple solution. Just check if it has number and a dot. at the start
+        is_numbered = bool(re.match(r'^\d+\.', sentence))
+        if is_numbered:
+            return StringClass.Question
+        return StringClass.Answer
+
+
     
     def classify(self, sentence) -> StringClass:
         result = self.classifier(sentence)

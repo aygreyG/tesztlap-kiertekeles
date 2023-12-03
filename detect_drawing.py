@@ -28,7 +28,7 @@ class DetectDrawingSolution:
         difference_pixel_count = np.sum(difference_mask)
         total_pixels = image.shape[0] * image.shape[1]
         difference_percentage = (difference_pixel_count / total_pixels) * 100
-        print(difference_percentage)
+        # print(difference_percentage) # testing percentages
         if difference_percentage != 100:
             return DrawingClass.MARKED
         return DrawingClass.CLEAN
