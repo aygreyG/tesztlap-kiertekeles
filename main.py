@@ -56,7 +56,7 @@ def main():
     if len(sys.argv) != 5:
         image_path = r'D:\project\egyetem\kepfel\tesztlap-kiertekeles\test_data\sheet_07.jpg'
         solution_path = r'D:\project\egyetem\kepfel\tesztlap-kiertekeles\Megol.txt'
-        tesseract_path = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+        tesseract_path = r'C:\Program Files\Tesseract-OCR\tesseract.exe' # '/usr/bin/tesseract'
     else:
         image_path = sys.argv[2]
         solution_path = sys.argv[3]

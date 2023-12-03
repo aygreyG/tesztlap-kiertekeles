@@ -3,10 +3,10 @@ import pytesseract
 
 # path to tesseract executable
 # install from: https://github.com/tesseract-ocr/tesseract#installing-tesseract
-pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
 
 # gives back an array of (text, cropped image, coordinates) where text is the text in the image
-def get_regions(img_path):
+def get_regions(img_path, tesseract_path):
+    pytesseract.pytesseract.tesseract_cmd = tesseract_path
     img = cv2.imread(img_path)
     # resize image
     w = 1080

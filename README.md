@@ -15,7 +15,8 @@ A tesztlap tartalmazza a következőket:
 6. Az eredményt vizualizáljuk, a pontszám mellett visszaadjuk a tesztlapot is úgy, hogy a script rárajzolja az azonosított részeket, bekeretezi különböző színű téglalapokkal.
 
 # Tesseract letöltési útmutató
-https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.3.0.20221214.exe
+- https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.3.0.20221214.exe
+- System PATH beállítása (jellemzően 'C:\Program Files\Tesseract-OCR\tesseract.exe')
 
 # Állomány futattása
 ``` pip install -r requirements.txt ```
