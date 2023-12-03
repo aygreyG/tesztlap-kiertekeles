@@ -3,8 +3,8 @@ import sentence_classification
 import detect_drawing
 import os
 import cv2
-# language package DOWNLOAD
-# 10
+import pont_keret
+
 
 def test_1_2():
     # TODO test
@@ -47,10 +47,12 @@ def GT(sections: list[list[dict]] = []) -> list[int]: # INPUT (TEXT, IMAGE, COOR
     return marked_answers
 
 def main():
-    sections = readphoto.get_regions(r'tesztlap-kiertekeles\test_data')             # 1., 2. lépés
-    marked_answers = GT(sections)                                                   # 3., 4. lépés
-    import pont_keret
-    
+    img_folder_path = r'tesztlap-kiertekeles\test_data'
+    solution_path = r'tesztlap-kiertekeles\Megol.txt'
+    sections = readphoto.get_regions(img_folder_path)
+    marked_answers = GT(sections)
+    # pont_keret.pontszam(text_path=solution_path, anwsers_det=marked_answers)
+    # pont_keret.keret(img_path=img_folder_path)
 
 if __name__ == "__main__":
     main()
